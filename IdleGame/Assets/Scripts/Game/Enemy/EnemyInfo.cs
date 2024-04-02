@@ -1,33 +1,92 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
 [System.Serializable]
 public class Enemy
 {
-    public int hp;      // Ã¼·Â
-    public int atk;     // °ø°Ý·Â
-    public int def;     // ¹æ¾î·Â
-    public float speed; // ½ºÇÇµå
+    public int hp;      // ì²´ë ¥
+    public int atk;     // ê³µê²©ë ¥
+    public int def;     // ë°©ì–´ë ¥
+    public float speed; // ìŠ¤í”¼ë“œ
 }
 
 public class EnemyInfo : MonoBehaviour
 {
+    const float DIE_DELAY = 3f;
     [SerializeField] Enemy enemy;
     public Enemy Enemy { set { enemy = value; } }
-
-    [HideInInspector] public GameObject Player;
 
     private NavMeshAgent agent;
     private Animator animator;
 
+    [SerializeField] NpcState npcState;
+    private NpcAniState npcAniState;
+
+
+    [HideInInspector] public GameObject Player;
+
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
     }
 
-    public void StartMove()
+    public void NPC_Start()
     {
         agent.speed = enemy.speed;
+        npcState = NpcState.alive;
+        AnimationChanger(NpcAniState.Walk);
         agent.SetDestination(Player.transform.position);
+        StartCoroutine(UpdateCoroutine());
     }
+
+    private IEnumerator UpdateCoroutine()
+    {
+        while (npcState.Equals(NpcState.alive))
+        {
+            yield return null;
+            if (MoveCheck())
+            {
+                Debug.Log(1);
+                if (agent.isStopped)
+                {
+                    AnimationChanger(NpcAniState.Walk);
+                    agent.SetDestination(Player.transform.position);
+                }
+            }
+            else
+            {
+                Debug.Log(2);
+                if (!agent.isStopped)
+                {
+                    agent.isStopped = true;
+                    agent.ResetPath();
+                }
+                yield return new WaitForSeconds(1f);
+                AnimationChanger(NpcAniState.Attack01);
+            }
+        }
+
+        AnimationChanger(NpcAniState.DieStart);
+        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
+        yield return new WaitForSeconds(DIE_DELAY);
+        AnimationChanger(NpcAniState.DieEnd);
+        this.gameObject.SetActive(false);
+    }
+    private void AnimationChanger(NpcAniState state)
+    {
+        npcAniState = state;
+        animator.Play(state.ToString(), 0, 0);
+    }
+    private bool MoveCheck()
+    {
+        // Vector3 targetPos = new Vector3(Player.transform.position.x,0,Player.transform.position.z);
+        if (agent.remainingDistance < agent.stoppingDistance)
+            return false;
+        else
+            return true;
+
+    }
+
 }

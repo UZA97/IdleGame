@@ -54,7 +54,7 @@ public class EnemyCreate : MonoBehaviour
     //public void StartEnemyWave(int _wave, int _count)
     public void StartEnemyWave(int _wave)
     {
-        StartCoroutine(StartEnemyCreateCoroutine(_wave, 30));
+        StartCoroutine(StartEnemyCreateCoroutine(_wave, enemyPoolSize));
     }
     private IEnumerator StartEnemyCreateCoroutine(int _wave, int _count)
     {
@@ -66,7 +66,7 @@ public class EnemyCreate : MonoBehaviour
             info.transform.SetParent(GetEnemyCreatePosition());
             info.transform.localPosition = Vector3.zero;
             info.gameObject.SetActive(true);
-            info.StartMove();
+            info.NPC_Start();
 
             yield return new WaitForSeconds(1f);
         }
