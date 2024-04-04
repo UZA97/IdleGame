@@ -759,10 +759,11 @@ MonoBehaviour:
   enemy:
     hp: 0
     atk: 0
+    atkSpeed: 0
     def: 0
     speed: 0
+  hp: {fileID: 2782160376155327174}
   npcState: 0
-  Player: {fileID: 0}
 --- !u!1 &1979251991605953477
 GameObject:
   m_ObjectHideFlags: 0
