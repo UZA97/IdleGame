@@ -54,7 +54,7 @@ public class EnemyCreate : MonoBehaviour
     //public void StartEnemyWave(int _wave, int _count)
     public void StartEnemyWave(int _wave)
     {
-        StartCoroutine(StartEnemyCreateCoroutine(_wave, enemyPoolSize));
+        StartCoroutine(StartEnemyCreateCoroutine(_wave, 1));
     }
     private IEnumerator StartEnemyCreateCoroutine(int _wave, int _count)
     {

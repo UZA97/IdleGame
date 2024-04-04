@@ -2826,7 +2826,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c07d7ac5a326bf54aa2bb4d8dc40e445, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPoolSize: 1
+  enemyPoolSize: 100
   enemyPoolPos: {fileID: 1911875066}
   createPos:
   - {fileID: 1619206746}
@@ -2847,11 +2847,11 @@ MonoBehaviour:
   - hp: 60
     atk: 6
     def: 6
-    speed: 2
+    speed: 1.5
   - hp: 90
     atk: 9
     def: 9
-    speed: 3
+    speed: 2
 --- !u!1 &1701020255
 GameObject:
   m_ObjectHideFlags: 0
@@ -3464,6 +3464,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 160098868}
     m_Modifications:
+    - target: {fileID: 5177630376625560391, guid: 2dfbb63c9cdf7504faf4ff26b0581598,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5177630376625560391, guid: 2dfbb63c9cdf7504faf4ff26b0581598,
         type: 3}
       propertyPath: variableJoystick
