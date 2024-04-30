@@ -148,19 +148,19 @@ public class EnemyInfo : MonoBehaviour
     #endregion
 
     #region Debug
-    // private void OnDrawGizmos()
-    // {
-    //     Gizmos.color = Color.red;
-    //     if (agent.remainingDistance > agent.stoppingDistance)
-    //     {
-    //         for (int i = 0; i < agent.path.corners.Length - 1; i++)
-    //         {
-    //             Gizmos.DrawLine(agent.path.corners[i], agent.path.corners[i + 1]);
-    //             Gizmos.DrawSphere(agent.path.corners[i + 1], .5f);
-    //         }
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        if (agent.remainingDistance > agent.stoppingDistance)
+        {
+            for (int i = 0; i < agent.path.corners.Length - 1; i++)
+            {
+                Gizmos.DrawLine(agent.path.corners[i], agent.path.corners[i + 1]);
+                Gizmos.DrawSphere(agent.path.corners[i + 1], .5f);
+            }
 
-    //         Gizmos.DrawSphere(agent.pathEndPosition, 1f);
-    //     }
-    // }
+            Gizmos.DrawSphere(agent.pathEndPosition, 1f);
+        }
+    }
     #endregion
 }
