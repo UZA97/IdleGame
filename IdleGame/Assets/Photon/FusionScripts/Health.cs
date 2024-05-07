@@ -1,4 +1,3 @@
-using System;
 using Fusion;
 using UnityEngine;
 
@@ -14,7 +13,7 @@ public class Health : NetworkBehaviour
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
     public void DealDamageRpc(float damage)
     {
-        Debug.Log("Received DealDamageRpc on StateAuthority, modifying Networked variable");
+        Debug.Log("Received DealDamageRpc : " + damage);
         NetworkedHealth -= damage;
     }
 }

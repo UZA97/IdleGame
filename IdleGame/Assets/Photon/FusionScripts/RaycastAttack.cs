@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class RaycastAttack : NetworkBehaviour
 {
-    public float Damage = 10;
+    public float Damage = 0.1f;
 
     public PlayerMovement PlayerMovement;
 
@@ -20,13 +20,14 @@ public class RaycastAttack : NetworkBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
             Debug.DrawRay(ray.origin, ray.direction, Color.red, 1f);
-        }
-        if (Runner.GetPhysicsScene().Raycast(ray.origin, ray.direction, out var hit))
-        {
-            if (hit.transform.TryGetComponent<Health>(out var health))
+            if (Runner.GetPhysicsScene().Raycast(ray.origin, ray.direction, out var hit))
             {
-                health.DealDamageRpc(Damage);
+                if (hit.transform.TryGetComponent<Health>(out var health))
+                {
+                    health.DealDamageRpc(Damage);
+                }
             }
         }
+
     }
 }

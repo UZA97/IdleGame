@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Fusion;
 using Fusion.Sockets;
 using System.Collections.Generic;
@@ -7,12 +6,18 @@ using System;
 
 public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
 {
-    public void OnPlayerJoined(NetworkRunner runner, PlayerRef player) { }
+    public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
+    {
+        Debug.Log("OnPlayerJoined" + player);
+    }
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player) { }
     public void OnInput(NetworkRunner runner, NetworkInput input) { }
     public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input) { }
     public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason) { }
-    public void OnConnectedToServer(NetworkRunner runner) { }
+    public void OnConnectedToServer(NetworkRunner runner)
+    {
+        Debug.Log("OnConnectedToServer" + runner);
+    }
     public void OnDisconnectedFromServer(NetworkRunner runner, NetDisconnectReason reason) { }
     public void OnConnectRequest(NetworkRunner runner, NetworkRunnerCallbackArgs.ConnectRequest request, byte[] token) { }
     public void OnConnectFailed(NetworkRunner runner, NetAddress remoteAddress, NetConnectFailedReason reason) { }

@@ -16,7 +16,6 @@ public class PlayerMovement : NetworkBehaviour
     private void Awake()
     {
         _controller = GetComponent<CharacterController>();
-        Debug.Log("Awake");
     }
 
     void Update()
@@ -57,18 +56,14 @@ public class PlayerMovement : NetworkBehaviour
 
         _jumpPressed = false;
     }
+    // Network 준비가 되었을 때 Call
     public override void Spawned()
     {
         Debug.Log("Spawned");
         if (HasStateAuthority)
         {
             Camera = Camera.main;
-            Camera.GetComponent<FirstPersonCamera>().Target = transform;
+            // Camera.GetComponent<FirstPersonCamera>().Target = transform;
         }
-    }
-    private void Start()
-    {
-        Debug.Log("Start");
-
     }
 }

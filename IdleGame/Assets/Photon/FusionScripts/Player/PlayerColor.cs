@@ -17,6 +17,8 @@ public class PlayerColor : NetworkBehaviour
     }
     void ColorChanged()
     {
+        Debug.Log("Color Runner : " + Runner + " _ " + NetworkedColor);
+
         MeshRenderer.material.color = NetworkedColor;
     }
 }
