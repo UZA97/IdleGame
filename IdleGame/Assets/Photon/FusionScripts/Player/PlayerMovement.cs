@@ -4,6 +4,7 @@ using UnityEngine;
 public class PlayerMovement : NetworkBehaviour
 {
     private Vector3 _velocity;
+    public Transform cmaPos;
     private bool _jumpPressed;
 
     private CharacterController _controller;
@@ -38,8 +39,14 @@ public class PlayerMovement : NetworkBehaviour
         {
             _velocity = new Vector3(0, -1, 0);
         }
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            NetworkTransform networkTransform = this.GetComponent<NetworkTransform>();
+            networkTransform.Teleport(Vector3.zero);
+            // this.transform.position = Vector3.zero;
+        }
         Quaternion cameraRotationY = Quaternion.Euler(0, Camera.transform.rotation.eulerAngles.y, 0);
-        Vector3 move = cameraRotationY * new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) * Runner.DeltaTime * PlayerSpeed;
+        Vector3 move = /*cameraRotationY **/ new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) * Runner.DeltaTime * PlayerSpeed;
         // Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) * Runner.DeltaTime * PlayerSpeed;
 
         _velocity.y += GravityValue * Runner.DeltaTime;
@@ -63,7 +70,7 @@ public class PlayerMovement : NetworkBehaviour
         if (HasStateAuthority)
         {
             Camera = Camera.main;
-            // Camera.GetComponent<FirstPersonCamera>().Target = transform;
+            Camera.GetComponent<FirstPersonCamera>().Target = cmaPos;
         }
     }
 }

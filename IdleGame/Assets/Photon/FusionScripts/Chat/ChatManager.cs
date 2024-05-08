@@ -12,6 +12,7 @@ public class ChatManager : MonoBehaviour
     public Button closeButton;
     public Button sendButton;
     public GameObject chatGroup;
+    public GameObject noticeImage;
     public Chat chatScroll;
     public TMP_InputField myInputField;
     public NetworkObject networkObject;
@@ -70,7 +71,13 @@ public class ChatManager : MonoBehaviour
         }
         else
         {
-            chatScroll.AddNewRow(Data.CellType.OtherText, str);
+            if (chatScroll.gameObject.activeSelf == false)
+                noticeImage.SetActive(true);
+            else
+            {
+                chatScroll.AddNewRow(Data.CellType.OtherText, str);
+                noticeImage.SetActive(false);
+            }
         }
     }
 }

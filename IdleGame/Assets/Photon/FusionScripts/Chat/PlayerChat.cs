@@ -4,36 +4,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-// public class PlayerChat : NetworkBehaviour
-// {
-//     public TextMeshPro chatStr;
-//     public SpriteRenderer chatBg;
-//     public TMP_InputField myInputField;
-//     public Button sendButton;
-//     public float width = 1.5f;
-//     [Networked, OnChangedRender(nameof(ChatChanged))]
-//     public string NetworkedChat { get; set; }
-//     private void Start()
-//     {
-//         myInputField = GameObject.Find("Canvas").transform
-//         .Find("My Text Window").Find("My InputField").GetComponent<TMP_InputField>();
-//         sendButton = GameObject.Find("Canvas").transform
-//         .Find("My Text Window").Find("My Send Button").GetComponent<Button>();
-//         sendButton?.onClick.AddListener(ChatChanged);
-//     }
-//     private void Update()
-//     {
-//         chatStr.transform.forward = Camera.main.transform.forward;
-//         chatBg.size = new Vector2(chatStr.preferredWidth * width, chatBg.size.y);
-//         if (HasStateAuthority)
-//             NetworkedChat = myInputField.text;
-
-//     }
-//     void ChatChanged()
-//     {
-//         chatStr.text = NetworkedChat;
-//     }
-// }
 public class PlayerChat : NetworkBehaviour
 {
     public TextMeshPro chatStr;
@@ -48,23 +18,26 @@ public class PlayerChat : NetworkBehaviour
     }
     private void Update()
     {
-        chatBg.transform.forward = -cam.transform.forward;
-        chatBg.size = new Vector2(chatStr.preferredWidth * width, chatBg.size.y);
+        chatBg.transform.forward = cam.transform.forward;
+        chatBg.size = new Vector2(chatStr.preferredWidth * width, chatStr.preferredHeight * width);
 
     }
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
     public void SendButton_ClickRpc(string str)
     {
-        ChatString = str;
+        if (HasStateAuthority)
+            ChatString = str;
     }
     Sequence sequence;
     void SendOtherChat()
     {
         ChatManager.instance.SendOtherChat_UI(HasStateAuthority, ChatString);
-        if (HasStateAuthority)
-        {
-            // chatBg.transform.DOScale(1,1).;  
-            chatStr.text = ChatString;
-        }
+        //DoTween Sequence
+        chatStr.text = ChatString;
+        Sequence seq = DOTween.Sequence();
+        seq.Append(chatBg.transform.DOScale(1, 1));  // animation 바로 실행  
+        seq.AppendInterval(5.0f); // 1초를 기다림
+        seq.Append(chatBg.transform.DOScale(0, 0.5f));  // animation 바로 실행  
+        seq.Play(); // Sequence 실행 
     }
 }
