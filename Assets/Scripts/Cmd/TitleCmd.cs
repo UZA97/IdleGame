@@ -4,6 +4,8 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
 using TMPro;
+using Cysharp.Threading.Tasks;
+using System;
 
 
 public class TitleCmd : MonoBehaviour
@@ -32,7 +34,19 @@ public class TitleCmd : MonoBehaviour
         DimStart();
         SetContentString(AppLoadState.end);
     }
-
+    async void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            int num = await WaitSecondTask(2);
+            Debug.Log(num);
+        }
+    }
+    private async UniTask<int> WaitSecondTask(int time)
+    {
+        await UniTask.Delay(TimeSpan.FromSeconds(time));
+        return time;
+    }
     private void SetButtonEvent()
     {
         startButton.SetEvent(() =>
